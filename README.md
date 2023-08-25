@@ -1,3 +1,3 @@
 # labAssignment_3
 
-## A new line added inside VS code
+## A new line added inside Vs code
