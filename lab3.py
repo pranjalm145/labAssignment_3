@@ -1,50 +1,51 @@
-class Process:
-    def __init__(self, p_id, process_name, start_time, priority):
-        self.p_id = p_id
-        self.process_name = process_name
-        self.start_time = start_time
-        self.priority = priority
 
-    def __str__(self):
-        return f"{self.p_id} {self.process_name} {self.start_time} {self.priority}"
 
-def sort_processes(processes, sort_param):
-    if sort_param == 1:
-        return sorted(processes, key=lambda x: x.p_id)
-    elif sort_param == 2:
-        return sorted(processes, key=lambda x: x.start_time)
-    elif sort_param == 3:
-        return sorted(processes, key=lambda x: x.priority)
+        class FlightTable:
+    def _init_(self):
+        self.data = []
 
-def print_flight_table(processes):
-    for process in processes:
-        print(process)
+    def add_entry(self, p_id, process, start_time, priority):
+        self.data.append({'P_ID': p_id, 'Process': process, 'Start Time': start_time, 'Priority': priority})
 
-if __name__ == "__main__":
-    processes = [
-        Process("P1", " VSCode ", 100, " MID "),
-        Process("P23", " Eclipse ", 234, " MID "),
-        Process("P93", " Chrome ", 189, " High "),
-        Process("P42", " JDK ", 9, " High "),
-        Process("P9", " CMD ", 7, " High "),
-        Process("P87", " NotePad ", 23, " Low 1"),
-    ]
+    def bubble_sort(self, key):
+        n = len(self.data)
+        for i in range(n - 1):
+            for j in range(0, n - i - 1):
+                if self.data[j][key] > self.data[j + 1][key]:
+                    self.data[j], self.data[j + 1] = self.data[j + 1], self.data[j]
 
-    while True:
-        print("\nOptions:")
-        print("1. Sort by P_ID")
-        print("2. Sort by Start Time")
-        print("3. Sort by Priority")
-        print("4. Exit")
+    def print_table(self):
+        print("{:<5} {:<10} {:<15} {:<10}".format("P_ID", "Process", "Start Time", "Priority"))
+        print("="*40)
+        for entry in self.data:
+            print("{:<5} {:<10} {:<15} {:<10}".format(entry['P_ID'], entry['Process'], entry['Start Time'], entry['Priority']))
 
-        choice = int(input("Enter your choice: "))
+flight_table = FlightTable()
+flight_table.add_entry("P1", "VSCode", 100, "MID")
+flight_table.add_entry("P23", "Eclipse", 234, "MID")
+flight_table.add_entry("P93", "Chrome", 189, "High")
+flight_table.add_entry("P42", "JDK", 9, "High")
+flight_table.add_entry("P9", "CMD", 7, "High")
+flight_table.add_entry("P87", "NotePad", 23, "Low")
 
-        if choice == 4:
-            break
+while True:
+    print("\nSorting Options:")
+    print("1. Sort by P_ID")
+    print("2. Sort by Start Time")
+    print("3. Sort by Priority")
+    print("4. Quit")
 
-        if choice in [1, 2, 3]:
-            sorted_processes = sort_processes(processes, choice)
-            print("\nFlight Table:")
-            print_flight_table(sorted_processes)
-        else:
-            print("Invalid choice. Please select a valid option.")
+    choice = int(input("Enter your choice: "))
+
+    if choice == 1:
+        flight_table.bubble_sort('P_ID')
+    elif choice == 2:
+        flight_table.bubble_sort('Start Time')
+    elif choice == 3:
+        flight_table.bubble_sort('Priority')
+    elif choice == 4:
+        break
+    else:
+        print("Invalid choice. Please enter a valid option.")
+
+    flight_table.print_table()
